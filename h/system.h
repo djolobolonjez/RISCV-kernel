@@ -60,6 +60,7 @@
 #define W_RET asm volatile("sd a0, 80(s0)");
 
 #define WRITE_READY (*((char*)CONSOLE_STATUS) & CONSOLE_TX_STATUS_BIT)
+#define READ_READY (*((char*)CONSOLE_STATUS) & CONSOLE_RX_STATUS_BIT)
 
 #define C_WRITE *(char*)CONSOLE_TX_DATA
 #define C_READ *(char*)CONSOLE_RX_DATA
