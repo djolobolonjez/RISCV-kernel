@@ -93,19 +93,12 @@ void Riscv::trapHandler()  {
 
     uint64 cause = Riscv::r_scause();
 
-    if(cause == 0x09){
+    if(cause == 0x09 || cause == 0x08){
 
         volatile uint64 sepc = r_sepc() + 4;
         volatile uint64 sstatus = r_sstatus();
 
-        if(number == USER_MODE){
-            uint64 volatile sepc = Riscv::r_sepc() + 4;
-            Riscv::w_sepc(sepc);
-            Riscv::mc_sstatus(SSTATUS_SPP);
-            asm volatile("sret");
-        }
-
-        else if(number == MEM_ALLOC){
+        if(number == MEM_ALLOC){
             uint64 alloc_arg;
             asm volatile("mv %[arg], a1" : [arg] "=r"(alloc_arg));
             MemoryAllocator::kmem_alloc(alloc_arg);
@@ -211,123 +204,7 @@ void Riscv::trapHandler()  {
         w_sstatus(sstatus);
         w_sepc(sepc);
     }
-    else if(cause == 0x08){
-
-        volatile uint64 sepc = r_sepc() + 4;
-        volatile uint64 sstatus = r_sstatus();
-
-    if(number == SYSTEM_MODE){
-        uint64 volatile sepc = Riscv::r_sepc() + 4;
-        Riscv::w_sepc(sepc);
-        Riscv::ms_sstatus(SSTATUS_SPP);
-        asm volatile("sret");
-    }
-    if(number == MEM_ALLOC){
-        uint64 alloc_arg;
-        asm volatile("mv %[arg], a1" : [arg] "=r"(alloc_arg));
-        MemoryAllocator::kmem_alloc(alloc_arg);
-        W_RET
-    }
-
-    else if(number == MEM_FREE){
-        void* free_arg;
-        asm volatile("mv %[arg], a1" : [arg] "=r"(free_arg));
-        MemoryAllocator::kmem_free(free_arg);
-        W_RET
-    }
-    else if(number == THREAD_CREATE){
-        thread_t* handle;
-        void (*start_routine)(void*);
-        void* arg;
-        void* stck;
-
-        ABI_REG_THREE(handle, start_routine, arg);
-        LOAD_STACK(stck);
-
-        TCB::createThread(handle, start_routine, arg, stck, 0);
-        W_RET
-    }
-    else if(number == THREAD_EXIT){
-        TCB::suspend();
-        W_RET
-    }
-    else if(number == THREAD_DISPATCH){
-        volatile uint64 sepc = r_sepc() + 4;
-        volatile uint64 sstatus = r_sstatus();
-        TCB::timeSliceCounter = 0;
-        TCB::yield();
-        w_sstatus(sstatus);
-        w_sepc(sepc);
-    }
-    else if(number == TCB_CREATE){
-        TCB::call = 1;
-        thread_t* handle;
-        void (*start_routine)(void*);
-        void* arg;
-        void* stck;
-
-        ABI_REG_THREE(handle, start_routine, arg);
-        LOAD_STACK(stck);
-
-        TCB::createThread(handle, start_routine, arg, stck, 1);
-        W_RET
-    }
-    else if(number == SEM_OPEN){
-        sem_t* handle;
-        unsigned init;
-
-        asm volatile("mv %[handle], a1" : [handle] "=r"(handle));
-        asm volatile("mv %[init], a2" : [init] "=r"(init));
-
-        KernelSem::createSem(handle, init);
-        W_RET
-    }
-    else if(number == SEM_CLOSE){
-        sem_t handle;
-
-        asm volatile("mv %[handle], a1" : [handle] "=r"(handle));
-
-        KernelSem::deleteSem(handle);
-        W_RET
-    }
-    else if(number == SEM_WAIT){
-        sem_t id;
-
-        asm volatile("mv %[id], a1" : [id] "=r"(id));
-        id->wait();
-
-        W_RET
-    }
-    else if(number == SEM_SIGNAL){
-        sem_t id;
-
-        asm volatile("mv %[id], a1" : [id] "=r"(id));
-        id->signal();
-
-        W_RET
-    }
-    else if(number == TIME_SLEEP){
-        time_t time;
-        asm volatile("mv %[time], a1" : [time] "=r"(time));
-
-        TCB::running->setAsleep(true);
-        Sleeping::add(time);
-        TCB::dispatch();
-    }
-    else if(number == PUTC){
-        char c;
-        asm volatile("mv %[ch], a1" : [ch] "=r"(c));
-
-        KernelConsole::getInstance()->put(c);
-    }
-    else if(number == GETC){
-        KernelConsole::getInstance()->get();
-        W_RET
-    }
-
-    w_sstatus(sstatus);
-    w_sepc(sepc);
-    }
+   
     else if(cause == 0x8000000000000001UL){
 
         TCB::timeSliceCounter++;

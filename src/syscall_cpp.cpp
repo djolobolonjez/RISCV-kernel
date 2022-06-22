@@ -20,7 +20,6 @@ void operator delete[](void* addr){
 }
 
 void user_wrapper(void* arg){
-    toUser();
     user_main_* ptr = (user_main_*)arg;
     ptr->fn();
 }

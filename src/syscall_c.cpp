@@ -211,19 +211,3 @@ char getc(){
 
     return c;
 }
-
-void toUser(){
-
-    uint64 num = USER_MODE;
-
-    asm volatile("mv a0, %[num]" : : [num] "r"(num));
-    asm volatile("ecall");
-}
-
-void toSystem(){
-
-    uint64 num = SYSTEM_MODE;
-
-    asm volatile("mv a0, %[num]" : : [num] "r"(num));
-    asm volatile("ecall");
-}

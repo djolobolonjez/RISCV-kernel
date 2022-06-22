@@ -36,8 +36,6 @@ void KernelConsole::put(char c) {
     output_buff[tail1] = c;
     tail1 = (tail1 + 1) % MAX_BUFF_SIZE;
 
-    sem_signal(emptyBuff1);
-
 }
 
 char KernelConsole::get() {
@@ -47,8 +45,6 @@ char KernelConsole::get() {
     char c = input_buff[head2];
     head2 = (head2 + 1) % MAX_BUFF_SIZE;
     size--;
-
-    sem_signal(fullBuff2);
 
     return c;
 }

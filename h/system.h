@@ -21,9 +21,6 @@
 #define GETC 0x41
 #define PUTC 0x42
 
-#define USER_MODE 0x50
-#define SYSTEM_MODE 0x51
-
 #define MAX_BUFF_SIZE 1024
 
 #define ECALL asm volatile("ecall");

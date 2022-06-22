@@ -33,8 +33,6 @@ void main(){
         thread_dispatch();
     }
 
-    toSystem();
-
     Riscv::ms_sstatus(SSTATUS_SIE);
 
     while(instance->inputHead() != instance->inputTail()) { }
