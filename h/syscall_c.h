@@ -26,8 +26,5 @@ int time_sleep(time_t);
 char getc();
 void putc(char);
 
-void toUser();
-void toSystem();
-
 
 #endif
