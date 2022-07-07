@@ -1,5 +1,7 @@
 #include "../h/riscv.h"
 #include "../h/scheduler.h"
+#include "../h/tcb.h"
+#include "../h/syscall_c.h"
 
 class Thread;
 

@@ -21,6 +21,9 @@
 #define GETC 0x41
 #define PUTC 0x42
 
+#define USER_MODE 0x50
+#define SYSTEM_MODE 0x51
+
 #define MAX_BUFF_SIZE 1024
 
 #define ECALL asm volatile("ecall");
@@ -57,9 +60,14 @@
 #define W_RET asm volatile("sd a0, 80(s0)");
 
 #define WRITE_READY (*((char*)CONSOLE_STATUS) & CONSOLE_TX_STATUS_BIT)
-#define READ_READY (*((char*)CONSOLE_STATUS) & CONSOLE_RX_STATUS_BIT)
 
 #define C_WRITE *(char*)CONSOLE_TX_DATA
 #define C_READ *(char*)CONSOLE_RX_DATA
+
+class TCB;
+class KernelSem;
+
+typedef KernelSem* sem_t;
+typedef TCB* thread_t;
 
 #endif

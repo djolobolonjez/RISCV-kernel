@@ -1,4 +1,6 @@
 #include "../h/syscall_cpp.hpp"
+#include "../h/tcb.h"
+#include "../h/kernelsem.h"
 
 void* operator new(size_t size){
 

@@ -1,14 +1,13 @@
 #ifndef _tcb_h
 #define _tcb_h
 
-#include "../lib/hw.h"
+
 #include "../h/MemoryAllocator.h"
+#include "../h/system.h"
 
 class Scheduler;
 class KernelSem;
-class TCB;
 
-typedef TCB* thread_t;
 
 class TCB{
 

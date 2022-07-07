@@ -5,9 +5,6 @@
 
 class TCB;
 
-class KernelSem;
-typedef KernelSem* sem_t;
-
 class KernelSem{
 
 public:

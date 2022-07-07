@@ -224,8 +224,11 @@ void Riscv::trapHandler()  {
     else if(cause == 0x8000000000000009UL){
         int irq = plic_claim();
         if(irq == CONSOLE_IRQ){
+            if(*(char*)CONSOLE_STATUS & CONSOLE_TX_STATUS_BIT){
 
-            if(READ_READY){
+            }
+
+            if(*(char*)CONSOLE_STATUS & CONSOLE_RX_STATUS_BIT){
                 char c = C_READ;
                 KernelConsole* cons  = KernelConsole::getInstance();
                 if(cons->size < MAX_BUFF_SIZE){

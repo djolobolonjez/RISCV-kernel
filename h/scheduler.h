@@ -1,7 +1,7 @@
 #ifndef _scheduler_h
 #define _scheduler_h
 
-#include "../h/syscall_c.h"
+class TCB;
 
 class Scheduler{
 

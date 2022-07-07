@@ -1,5 +1,8 @@
 #include "../h/scheduler.h"
 #include "../h/riscv.h"
+#include "../h/system.h"
+#include "../h/kernelsem.h"
+#include "../h/tcb.h"
 
 KernelSem::KernelSem(sem_t* handle, unsigned int init_value) : val((int)init_value) {
     head = tail = nullptr;

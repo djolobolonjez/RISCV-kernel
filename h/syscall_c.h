@@ -2,8 +2,7 @@
 #define _syscall_c
 
 #include "system.h"
-#include "tcb.h"
-#include "kernelsem.h"
+
 
 const int EOF = -1;
 

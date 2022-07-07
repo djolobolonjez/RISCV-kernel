@@ -1,5 +1,6 @@
 #include "../h/sleeping.h"
 #include "../h/scheduler.h"
+#include "../h/tcb.h"
 
 Sleeping::SleepQueue* Sleeping::head = nullptr;
 

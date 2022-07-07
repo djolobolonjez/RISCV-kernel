@@ -1,5 +1,6 @@
 #include "../h/kernelcons.h"
 #include "../h/riscv.h"
+#include "../h/MemoryAllocator.h"
 
 KernelConsole* KernelConsole::instance = nullptr;
 
