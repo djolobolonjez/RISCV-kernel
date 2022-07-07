@@ -70,4 +70,6 @@ class KernelSem;
 typedef KernelSem* sem_t;
 typedef TCB* thread_t;
 
+const int EOF = -1;
+
 #endif

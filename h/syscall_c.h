@@ -4,8 +4,6 @@
 #include "system.h"
 
 
-const int EOF = -1;
-
 void* mem_alloc(size_t size);
 int mem_free(void* addr);
 
