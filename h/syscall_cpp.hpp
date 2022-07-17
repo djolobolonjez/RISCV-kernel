@@ -4,35 +4,16 @@
 #include "syscall_c.h"
 
 void* operator new(size_t);
+
 void* operator new[](size_t);
+
 void operator delete(void*);
+
 void operator delete[](void*);
-
-class Thread;
-typedef void (Thread::*run_ptr)();
-
-typedef void(*user)();
-
-class PeriodicThread;
-typedef void (PeriodicThread::*periodic_ptr)();
 
 void user_wrapper(void*);
 
-struct thread_ {
-    run_ptr fn;
-    Thread* t;
-};
 
-struct periodic_thread {
-
-    periodic_ptr periodic_fn;
-    PeriodicThread* pt;
-    time_t period;
-};
-
-struct user_main_{
-    user fn;
-};
 
 class Thread {
 public:

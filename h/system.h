@@ -21,9 +21,6 @@
 #define GETC 0x41
 #define PUTC 0x42
 
-#define USER_MODE 0x50
-#define SYSTEM_MODE 0x51
-
 #define MAX_BUFF_SIZE 1024
 
 #define ECALL asm volatile("ecall");
@@ -64,12 +61,38 @@
 #define C_WRITE *(char*)CONSOLE_TX_DATA
 #define C_READ *(char*)CONSOLE_RX_DATA
 
+const int EOF = -1;
+
 class TCB;
 class KernelSem;
+class Thread;
+class PeriodicThread;
 
 typedef KernelSem* sem_t;
+
 typedef TCB* thread_t;
 
-const int EOF = -1;
+typedef void (Thread::*run_ptr)();
+
+typedef void(*user)();
+
+typedef void (PeriodicThread::*periodic_ptr)();
+
+struct thread_ {
+    run_ptr fn;
+    Thread* t;
+};
+
+struct periodic_thread {
+
+    periodic_ptr periodic_fn;
+    PeriodicThread* pt;
+    time_t period;
+};
+
+struct user_main_ {
+    user fn;
+};
+
 
 #endif
