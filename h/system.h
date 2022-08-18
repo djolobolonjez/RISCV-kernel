@@ -2,6 +2,7 @@
 #define _system_h
 
 #include "../lib/hw.h"
+#include "defs.h"
 
 #define MEM_ALLOC 0x01
 #define MEM_FREE 0x02
@@ -60,39 +61,6 @@
 
 #define C_WRITE *(char*)CONSOLE_TX_DATA
 #define C_READ *(char*)CONSOLE_RX_DATA
-
-const int EOF = -1;
-
-class TCB;
-class KernelSem;
-class Thread;
-class PeriodicThread;
-
-typedef KernelSem* sem_t;
-
-typedef TCB* thread_t;
-
-typedef void (Thread::*run_ptr)();
-
-typedef void(*user)();
-
-typedef void (PeriodicThread::*periodic_ptr)();
-
-struct thread_ {
-    run_ptr fn;
-    Thread* t;
-};
-
-struct periodic_thread {
-
-    periodic_ptr periodic_fn;
-    PeriodicThread* pt;
-    time_t period;
-};
-
-struct user_main_ {
-    user fn;
-};
 
 
 #endif
