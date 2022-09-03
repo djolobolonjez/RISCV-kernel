@@ -1,11 +1,13 @@
 #include "../h/syscall_c.h"
 
-void* mem_alloc(size_t size){
+void* 
+mem_alloc(size_t size)
+{
 
     uint64 num = MEM_ALLOC;
     void* addr;
 
-    size_t blockSize = size/MEM_BLOCK_SIZE + (size%MEM_BLOCK_SIZE != 0?1:0);
+    size_t blockSize = size/MEM_BLOCK_SIZE + (size % MEM_BLOCK_SIZE != 0 ? 1:0);
 
     SYSCALL_REG_TWO(num, blockSize);
 
@@ -17,7 +19,9 @@ void* mem_alloc(size_t size){
 
 }
 
-int mem_free(void* addr){
+int 
+mem_free(void* addr)
+{
 
     uint64 num = MEM_FREE;
     int ret;
@@ -31,7 +35,9 @@ int mem_free(void* addr){
     return ret;
 }
 
-int thread_create(thread_t* handle, void(*start_routine)(void*), void* arg){
+int 
+thread_create(thread_t* handle, void(*start_routine)(void*), void* arg)
+{
 
     if(handle == nullptr) return -1;
 
@@ -58,7 +64,9 @@ int thread_create(thread_t* handle, void(*start_routine)(void*), void* arg){
     return ret;
 }
 
-void thread_dispatch(){
+void 
+thread_dispatch()
+{
 
     uint64 num = THREAD_DISPATCH;
 
@@ -67,7 +75,9 @@ void thread_dispatch(){
     ECALL
 }
 
-int thread_exit(){
+int 
+thread_exit()
+{
 
     uint64 num = THREAD_EXIT;
     int ret = 0;
@@ -81,7 +91,9 @@ int thread_exit(){
     return ret;
 }
 
-int sem_open(sem_t* handle, unsigned init){
+int 
+sem_open(sem_t* handle, unsigned init)
+{
 
     if(handle == nullptr) return -1;
 
@@ -101,7 +113,9 @@ int sem_open(sem_t* handle, unsigned init){
     return ret;
 }
 
-int sem_close(sem_t handle){
+int 
+sem_close(sem_t handle)
+{
 
     if(handle == nullptr) return -1;
 
@@ -117,7 +131,9 @@ int sem_close(sem_t handle){
     return ret;
 }
 
-int sem_wait(sem_t id){
+int 
+sem_wait(sem_t id)
+{
 
     if(id == nullptr) return -1;
     uint64 num = SEM_WAIT;
@@ -132,7 +148,9 @@ int sem_wait(sem_t id){
     return ret;
 }
 
-int sem_signal(sem_t id){
+int 
+sem_signal(sem_t id)
+{
 
     if(id == nullptr) return -1;
     uint64 num = SEM_SIGNAL;
@@ -147,7 +165,9 @@ int sem_signal(sem_t id){
     return ret;
 }
 
-int tcb_create(thread_t* handle, void(*fun)(void*), void* arg){
+int 
+tcb_create(thread_t* handle, void(*fun)(void*), void* arg)
+{
 
     if(handle == nullptr) return -1;
 
@@ -174,7 +194,9 @@ int tcb_create(thread_t* handle, void(*fun)(void*), void* arg){
     return ret;
 }
 
-int time_sleep(time_t time){
+int 
+time_sleep(time_t time)
+{
 
     if(time <= 0) return -1;
     uint64 num = TIME_SLEEP;
@@ -189,7 +211,9 @@ int time_sleep(time_t time){
     return ret;
 }
 
-void putc(char c){
+void 
+putc(char c)
+{
 
     uint64 num = PUTC;
 
@@ -198,7 +222,9 @@ void putc(char c){
     ECALL
 }
 
-char getc(){
+char 
+getc()
+{
 
     char c;
     uint64 num = GETC;
